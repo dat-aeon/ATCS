@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-3.1.xsd ">
+
+	<!-- ************************************************************************************** 
+		************************ Configuration of Flow Classes. ******************************* 
+		*************************************************************************************** -->
+
+	<bean name="loginController"
+		class="mm.aeon.com.ass.front.login.LoginController" scope="prototype" />
+		
+	<bean name="cusMessagingSearchController"
+		class="mm.aeon.com.ass.front.cusMessagingHistoryList.CusMessagingHistoryListController" scope="prototype" />
+		
+	<bean name="cusMessagingReplyController"
+		class="mm.aeon.com.ass.front.cusMessageReply.CusMessagingReplyController" scope="prototype" />
+	
+	<bean name="flowProcessInvokerInfoRepository"
+		class="mm.com.dat.presto.main.core.front.controller.FlowProcessInvokerInfoRepository">
+		<property name="flowProcessAccessor">
+			<map>
+				<!-- *************************************************************************** 
+					*****************Configuration Controller and Controller Bean************** 
+					*************************************************************************** -->
+				<entry key="mm.aeon.com.ass.front.login.LoginFormBean#login">
+					<ref bean="loginController" />
+				</entry>
+				
+				<entry key="mm.aeon.com.ass.front.cusMessagingHistoryList.CusMessagingHistoryListFormBean#search">
+					<ref bean="cusMessagingSearchController" />
+				</entry>
+				
+				<entry key="mm.aeon.com.ass.front.cusMessageReply.CusMessagingReplyFormBean#reply">
+					<ref bean="cusMessagingReplyController" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean name="controllerAccessor"
+		class="mm.com.dat.presto.main.core.front.controller.ControllerAccessor"
+		scope="prototype">
+		<property name="flowProcessInfoInvokerRepository"
+			ref="flowProcessInvokerInfoRepository" />
+		<property name="serviceInvoker" ref="serviceInvoker" />
+		<property name="daoServiceInvoker" ref="daoServiceInvoker" />
+	</bean>
+</beans>

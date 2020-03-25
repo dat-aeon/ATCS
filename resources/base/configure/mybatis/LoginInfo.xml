@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="LoginInfo">
+	<select id="refer"
+		parameterType="mm.aeon.com.ass.base.dto.loginInfoRefer.LoginInfoReferReqDto"
+		resultMap="loginInfoReferResDto">
+		SELECT 
+			AAL.AGENT_LEVEL_ID,
+			AAL.AGENT_LEVEL_NAME, 
+			AAL.PASSWORD,
+			AAL.AGENT_LEVEL_CODE,
+			AALT.NAME as AT_AGENT_LEVEL_TYPE_NAME,
+			AALT.TIME_MINUTE_INTERVAL
+		FROM 
+			at_agent_level AAL
+		LEFT JOIN
+			at_agent_level_type AALT
+		ON
+			AAL.AT_AGENT_LEVEL_TYPE_ID = AALT.AT_AGENT_LEVEL_TYPE_ID
+		<where>
+			<if test="loginId != null and loginId != ''">
+				AAL.AGENT_LEVEL_CODE = #{loginId}
+			</if>
+			<if test="password != null and password != ''">
+				AND AAL.PASSWORD = #{password}
+			</if>
+			And AAL.DEL_FLAG = 0
+		</where>
+	</select>
+
+	<resultMap id="loginInfoReferResDto"
+		type="mm.aeon.com.ass.base.dto.loginInfoRefer.LoginInfoReferResDto">
+		<result property="agentId" column="AGENT_LEVEL_ID" />
+		<result property="agentName" column="AGENT_LEVEL_NAME" />
+		<result property="timeInterval" column="TIME_MINUTE_INTERVAL" />
+		<result property="atAgentLevelTypeName" column="AT_AGENT_LEVEL_TYPE_NAME" />
+	</resultMap>
+</mapper>

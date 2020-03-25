@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.org/schema/seam/pages"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd"
+	no-conversation-view-id="/view/Error.xhtml"
+	login-view-id="/view/Login.xhtml">
+
+	<page view-id="*">
+		<navigation>
+			<rule if-outcome="logout">
+				<redirect view-id="/view/Login.xhtml" />
+			</rule>
+
+			<rule if-outcome="AdminSearch">
+				<end-conversaHtion before-redirect="true"
+					root="false" />
+				<redirect view-id="/view/AdminList.xhtml" />
+			</rule>
+
+			<rule if-outcome="CUS001">
+				<end-conversation before-redirect="true"
+					root="false" />
+				<redirect view-id="/view/CUS001.xhtml" />
+			</rule>
+			
+			<rule if-outcome="MSG001">
+				<end-conversation before-redirect="true"
+					root="false" />
+				<redirect view-id="/view/MSG001" />
+			</rule>
+
+			<rule if-outcome="PasswordChange">
+				<end-conversation before-redirect="true"
+					root="false" />
+				<redirect view-id="/view/PasswordChange.xhtml" />
+			</rule>
+			
+		</navigation>
+	</page>
+
+	<page view-id="/view/Login.xhtml" login-required="false">
+		<action execute="#{loginFormBean.init()}"
+			if="#{loginFormBean.loginInitFlag}" />
+		<navigation>
+			<rule if-outcome="ok">
+				<redirect view-id="/view/LGN002.xhtml" />
+			</rule>
+			<rule if-outcome="error">
+				<redirect view-id="/view/Login.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+	
+	<page view-id="/view/LGN002.xhtml" login-required="false">
+		<action execute="#{agentSetupFormBean.init()}"
+			if="#{agentSetupFormBean.init}" />
+		<navigation>
+			<rule if-outcome="ok">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+			<rule if-outcome="error">
+				<redirect view-id="/view/LGN002.xhtml" />
+			</rule>
+			<rule if-outcome="back">
+				<redirect view-id="/view/Login.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+
+	<page view-id="/view/Welcome.xhtml" login-required="true">
+		<begin-conversation join="true" />
+	</page>
+
+	<page view-id="/view/ComingSoon.xhtml" login-required="true">
+		<begin-conversation join="true" />
+	</page>
+
+	<page view-id="/view/Error.xhtml" login-required="false">
+		<end-conversation before-redirect="true" root="true" />
+		<navigation>
+			<rule if-outcome="init">
+				<redirect view-id="/view/Login.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+
+	<page view-id="/view/MSG001.xhtml" login-required="true">
+		<action execute="#{cusMessagingHistoryListFormBean.init()}"
+			if="#{cusMessagingHistoryListFormBean.init}" />
+		<action execute="#{cusMessagingHistoryListFormBean.search()}"
+			if="#{cusMessagingHistoryListFormBean.doReload}" />
+		<navigation>
+			<rule if-outcome="init">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+			<rule if-outcome="ok">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+			<rule if-outcome="search">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+			<rule if-outcome="error">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+			<rule if-outcome="register">
+				<redirect view-id="/view/MSG002.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+	
+	<page view-id="/view/MSG002.xhtml" login-required="true">
+		<action execute="#{cusMessagingReplyFormBean.init()}"
+			if="#{cusMessagingReplyFormBean.init and cusMessagingReplyFormBean.replyParam != null}" />
+		<navigation>
+			<rule if-outcome="init">
+				<redirect view-id="/view/MSG002.xhtml" />
+			</rule>
+			<rule if-outcome="error">
+				<redirect view-id="/view/MSG002.xhtml" />
+			</rule>
+			<rule if-outcome="ok">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+			<rule if-outcome="search">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+			<rule if-outcome="back">
+				<redirect view-id="/view/MSG001.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+
+	<!-- Exception that occurs when uploading exceeds the file's maximum size -->
+	<!-- <exception class="org.jboss.seam.web.FileUploadException"
+		log-level="INFO">
+		<redirect view-id="/view/Error.xhtml">
+			<message>File size exceeds 2MB.</message>
+		</redirect>
+	</exception> -->
+
+	<!-- Exception that occurs when conversation control is not correctly done -->
+	<!-- <exception
+		class="org.jboss.seam.ConcurrentRequestTimeoutException"
+		log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message>Processing was interrupted. Please log in again from the login screen.</message>
+		</redirect>
+	</exception> -->
+
+	<!-- Exception that occurs when an exception on View occurs -->
+	<!-- <exception
+		class="javax.faces.application.ViewExpiredException" log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message>Processing was interrupted. Please log in again from the login screen.</message>
+		</redirect>
+	</exception>
+
+	<exception
+		class="org.jboss.seam.security.AuthorizationException"
+		log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message severity="ERROR">Authorization problem occurred. Please login again.</message>
+		</redirect>
+	</exception>
+
+	<exception
+		class="org.jboss.seam.security.NotLoggedInException" log-level="FATAL">
+		<redirect view-id="/view/Login.xhtml">
+			<message severity="ERROR">Please Log In First.</message>
+		</redirect>
+	</exception> -->
+
+
+	<!-- When a service layer exception occurs -->
+	<!-- <exception
+		class="mm.com.dat.presto.main.exception.BaseException"
+		log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message severity="ERROR">An error occurred in the system. Please inform the system administrator.[BaseException] </message>
+		</redirect>
+	</exception> -->
+
+	<!-- FrontException -->
+	<!-- <exception
+		class="mm.aeon.com.ass.front.common.exception.SMSFrontException"
+		log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message severity="ERROR">An error occurred in the system. Please inform the system administrator. </message>
+		</redirect>
+	</exception> -->
+
+	<!-- FrontException -->
+	<!-- <exception
+		class="mm.aeon.com.ass.front.common.exception.InvalidScreenTransitionException"
+		log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message severity="ERROR">Access denied. Please log in again from the login screen. </message>
+		</redirect>
+	</exception> -->
+
+	<!-- PrestoDBException -->
+	<!-- <exception
+		class="mm.com.dat.presto.main.exception.PrestoDBException"
+		log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message severity="ERROR"> An error occurred in the system. Please inform the system administrator. </message>
+		</redirect>
+	</exception>
+
+	<exception class="java.lang.Exception" log-level="FATAL">
+		<redirect view-id="/view/Error.xhtml">
+			<message severity="ERROR">An error occurred in the system. Please inform the system administrator.[Exception] </message>
+		</redirect>
+	</exception> -->
+
+	<!-- EXCEPTION HANDLING -->
+
+</pages>

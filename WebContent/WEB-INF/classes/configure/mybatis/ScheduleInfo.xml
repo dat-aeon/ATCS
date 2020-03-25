@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ScheduleInfo">
+	
+	<select id="refer"
+		parameterType="mm.aeon.com.ass.base.dto.scheduleInfoRefer.ScheduleInfoReferReqDto"
+		resultMap="scheduleInfoReferResDto">
+		SELECT schedule_time_id, duration_hour
+		FROM at_schedule_time
+		where del_flag = false
+	</select>
+    
+    <resultMap id="scheduleInfoReferResDto"
+		type="mm.aeon.com.ass.base.dto.scheduleInfoRefer.ScheduleInfoReferResDto">
+		<result column="schedule_time_id" property="scheduleId" />
+		<result column="duration_hour" property="durationHour" />
+	</resultMap>
+</mapper>

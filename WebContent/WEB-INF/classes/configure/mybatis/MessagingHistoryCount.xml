@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MessagingHistoryCount">
+	
+	<select id="selectList"
+		parameterType="mm.aeon.com.ass.base.dto.cusMessagingHistorySearch.CusMessagingHistorySelectCountReqDto"
+		resultType="java.lang.Integer">
+		SELECT 
+		cm.chat_message_id
+		FROM at_chat_message cm
+		left join
+		customer_info c
+		on cm.customer_id = c.customer_id
+		<where>
+			and cm.del_flag = 0
+			and cm.op_send_flag = 0
+			<if test="fromInterval != null and fromInterval != ''">
+				and now() &gt;= cm.send_time + (#{fromInterval,jdbcType=INTEGER} || ' minute')::interval
+			</if>
+			<if test="toInterval != null and toInterval != ''">
+				and now() &lt;= cm.send_time + (#{toInterval,jdbcType=INTEGER} || ' hour')::interval + (#{fromInterval,jdbcType=INTEGER} || ' minute')::interval
+			</if>
+			<if test="categoryId != null and categoryId != ''">
+				and cm.da_product_type_id = #{categoryId}
+			</if>
+			<if test="brandId != null and brandId != ''">
+				and cm.brand_id = #{brandId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

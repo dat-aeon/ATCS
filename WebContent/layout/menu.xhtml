@@ -1,0 +1,38 @@
+<!--***********************************************************************
+ * $Date: 2019-09-11$
+ * $Author: Thiha Htet Zaw$
+ * $Rev:  $
+ * 2019 AEON Microfinance (Myanmar) Company	Limited. All Rights Reserved.
+ ***********************************************************************-->
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://richfaces.org/a4j" xmlns:p="http://primefaces.org/ui" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:c="http://java.sun.com/jsp/jstl/core"
+	contentType="text/html">
+	<h:form>
+		<p:menubar>
+			<!-- For Administrator User -->
+			<c:if test="#{userInfo.userTypeName == 'DA ADMIN'}">
+				<p:submenu label="#{displayItemBean.getDisplayItemName('userManagement')}" icon="ui-icon-gear" style="color: #302873;">
+					<p:menuitem value="#{displayItemBean.getDisplayItemName('admin')}" icon="ui-icon-search" action="#{mnu001FormBean.propagate('AdminSearch')}" />
+				</p:submenu>
+			</c:if>
+			
+			<!-- For Customer Management -->
+			<p:submenu icon="ui-icon-gear" label="#{displayItemBean.getDisplayItemName('customerManagement')}">
+				<p:menuitem value="#{displayItemBean.getDisplayItemName('customerInfo')}" icon="ui-icon-search" action="#{mnu001FormBean.propagate('CUS001')}" />
+				<p:separator/>
+				<p:menuitem value="#{displayItemBean.getDisplayItemName('custEditReqlist')}" icon="ui-icon-search" action="#{mnu001FormBean.propagate('CER001')}" />
+			</p:submenu>
+			
+			<!-- For Messaging Management -->
+			<p:submenu label="#{displayItemBean.getDisplayItemName('messageManagement')}" icon="ui-icon-gear" style="color: #302873;">
+				<p:menuitem value="#{displayItemBean.getDisplayItemName('cusMessagingHistory')}" icon="ui-icon-search" action="#{mnu001FormBean.propagate('CMS001')}" />
+			</p:submenu>
+			
+			<!-- For Profile Management -->
+			<p:submenu label="#{displayItemBean.getDisplayItemName('profile')}" icon="ui-icon-gear" style="color: #302873;">
+				<p:menuitem value="#{displayItemBean.getDisplayItemName('passwordChange')}" icon="ui-icon-search" action="#{mnu001FormBean.propagate('PasswordChange')}" />
+			</p:submenu>
+			
+		</p:menubar>
+	</h:form>
+</f:view>

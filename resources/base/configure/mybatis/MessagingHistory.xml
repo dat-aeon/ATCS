@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MessagingHistory">
+	<select id="selectList"
+		parameterType="mm.aeon.com.ass.base.dto.cusMessagingHistorySearch.CusMessagingHistorySearchReqDto"
+		resultMap="messagingSelectListResDtoResultMap">
+		SELECT 
+		cm.chat_message_id, 
+		cm.da_product_type_id, 
+		cm.customer_id, 
+		cm.brand_id, 
+		cm.customer_location, 
+		cm.message_content, 
+		cm.price, 
+		cm.phone_no, 
+		cm.url_link, 
+		cm.send_time, 
+		cm.agent_name, 
+		cm.op_send_flag, 
+		cm.del_flag,
+		c.name
+		FROM at_chat_message cm
+		left join
+			customer_info c
+		on 
+			cm.customer_id = c.customer_id
+		<where>
+			and cm.del_flag = 0
+			and cm.op_send_flag = 0
+			<if test="fromInterval != null and fromInterval != ''">
+				and now() &gt;= cm.send_time + (#{fromInterval,jdbcType=INTEGER} || ' minute')::interval
+			</if>
+			<if test="toInterval != null and toInterval != ''">
+				and now() &lt;= cm.send_time + (#{toInterval,jdbcType=INTEGER} || ' hour')::interval + (#{fromInterval,jdbcType=INTEGER} || ' minute')::interval
+			</if>
+			<if test="categoryId != null and categoryId != ''">
+				and cm.da_product_type_id = #{categoryId}
+			</if>
+			<if test="brandId != null and brandId != ''">
+				and cm.brand_id = #{brandId}
+			</if>
+		</where>
+		<if test="sortField != null and sortField != '' and sortField == 'productTypeId' ">
+			<if test="sortOrder != null and sortOrder != '' and sortOrder == 'ASCENDING' ">
+				ORDER BY cm.da_product_type_id ASC
+			</if>
+			<if test="sortOrder != null and sortOrder != '' and sortOrder == 'DESCENDING' ">
+				ORDER BY cm.da_product_type_id DESC
+			</if>
+		</if>
+		<if test="sortField != null and sortField != '' and sortField == 'brandId' ">
+				<if test="sortOrder != null and sortOrder != '' and sortOrder == 'ASCENDING' ">
+					ORDER BY cm.brand_id ASC
+				</if>
+				<if test="sortOrder != null and sortOrder != '' and sortOrder == 'DESCENDING' ">
+					ORDER BY cm.brand_id DESC
+				</if>
+			</if>
+			<if test="sortField != null and sortField != '' and sortField == 'textedTime' ">
+				<if test="sortOrder != null and sortOrder != '' and sortOrder == 'ASCENDING' ">
+					ORDER BY cm.send_time ASC
+				</if>
+				<if
+					test="sortOrder != null and sortOrder != '' and sortOrder == 'DESCENDING' ">
+					ORDER BY cm.send_time DESC
+				</if>
+			</if>
+			<if test="sortField == null or sortField == ''">
+				ORDER BY cm.send_time DESC
+			</if>
+			<if test="offset != null and limit != null">
+				OFFSET #{offset} LIMIT #{limit}
+			</if>
+	</select>
+
+	<resultMap id="messagingSelectListResDtoResultMap"
+		type="mm.aeon.com.ass.base.dto.cusMessagingHistorySearch.CusMessagingHistorySearchResDto">
+		<result column="chat_message_id" property="chatMessageId" />
+		<result column="customer_id" property="customerId" />
+		<result column="da_product_type_id" property="productTypeId" />
+		<result column="brand_id" property="brandId" />
+		<result column="message_content" property="messageContent" />
+		<result column="customer_location" property="customerLocation" />
+		<result column="send_time" property="textedTime" />
+		<result column="name" property="customerName" />
+	</resultMap>
+	
+	<insert id="insert" useGeneratedKeys="true" keyColumn="chat_message_id"
+		keyProperty="chatMessageId"
+		parameterType="mm.aeon.com.ass.base.dto.messageReply.MessageReplyReqDto">
+		INSERT INTO at_chat_message
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="categoryId != null and categoryId != ''">
+				da_product_type_id,
+			</if>
+			<if test="customerId != null">
+				customer_id,
+			</if>
+			<if test="brandId != null and brandId != ''">
+				brand_id,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="phoneNumber != null and phoneNumber != ''">
+				phone_no,
+			</if>
+			<if test="url != null and url != ''">
+				url_link,
+			</if>
+			<if test="additionalText != null and additionalText != ''">
+				message_content,
+			</if>
+			<if test="sendTime != null">
+				send_time,
+			</if>
+			<if test="opSendFlag != null and opSendFlag != ''">
+				op_send_flag,
+			</if>
+			<if test="sender != null and sender != ''">
+				agent_name,
+			</if>
+			<if test="agentLevelId != null">
+				agent_level_id,
+			</if>
+			<if test="readFlag != null">
+				read_flag
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="categoryId != null and categoryId != ''">
+				#{categoryId},
+			</if>
+			<if test="customerId != null">
+				#{customerId},
+			</if>
+			<if test="brandId != null and brandId != ''">
+				#{brandId},
+			</if>
+			<if test="price != null">
+				#{price},
+			</if>
+			<if test="phoneNumber != null and phoneNumber != ''">
+				#{phoneNumber},
+			</if>
+			<if test="url != null and url != ''">
+				#{url},
+			</if>
+			<if test="additionalText != null and additionalText != ''">
+				#{additionalText},
+			</if>
+			<if test="sendTime != null">
+				#{sendTime},
+			</if>
+			<if test="opSendFlag != null and opSendFlag != ''">
+				#{opSendFlag},
+			</if>
+			<if test="sender != null and sender != ''">
+				#{sender},
+			</if>
+			<if test="agentLevelId != null">
+				#{agentLevelId},
+			</if>
+			<if test="readFlag != null">
+				#{readFlag}
+			</if>
+		</trim>
+	</insert>
+	
+	<select id="count"
+		parameterType="mm.aeon.com.ass.base.dto.cusMessagingHistorySearch.CusMessagingHistorySelectCountReqDto"
+		resultType="java.lang.Integer">
+		SELECT 
+		cm.chat_message_id
+		FROM at_chat_message cm
+		left join
+		customer_info c
+		on cm.customer_id = c.customer_id
+		<where>
+			and cm.del_flag = 0
+			and cm.op_send_flag = 0
+			<if test="fromInterval != null and fromInterval != ''">
+				and now() &gt;= cm.send_time + (#{fromInterval,jdbcType=INTEGER} || ' minute')::interval
+			</if>
+			<if test="toInterval != null and toInterval != ''">
+				and now() &lt;= cm.send_time + (#{toInterval,jdbcType=INTEGER} || ' hour')::interval + (#{fromInterval,jdbcType=INTEGER} || ' minute')::interval
+			</if>
+			<if test="categoryId != null and categoryId != ''">
+				and cm.da_product_type_id = #{categoryId}
+			</if>
+			<if test="brandId != null and brandId != ''">
+				and cm.brand_id = #{brandId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

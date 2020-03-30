@@ -28,7 +28,7 @@
 	margin-right: 2px;
 	margin-bottom: 2px;
 	color: #fff;
-	background-color: #58B0B6 !important;
+	background-color: #302873 !important;
 	-webkit-transition-duration: 0.4s; /* Safari */
 	transition-duration: 0.4s;
 	font-weight: normal;
@@ -69,28 +69,23 @@
 	border-width: 2px;
 	border-color: #fff;
 	border-radius: 5px;
-	background-color: #58B0B6;
+	background-color: #302873;
 	margin-top: 10px;
 	color: #fff;
 	box-shadow: none !important;
 	text-shadow: none !important;
-	background: #58B0B6
-		-webkit-gradient(linear, left top, left bottom, from(rgb(88, 176, 182)),
+	background: #302873
+		-webkit-gradient(linear, left top, left bottom, from(rgb(48, 40, 115)),
 		to(rgba(255, 255, 255, 0)));
 	/* background-image: url('../images/logoutbtn.png') !important; */
 }
 
 .ui-button.btn_logout:hover {
 	background-color: #fff;
-	color: #58B0B6;
+	color: #302873;
 	background-image: none !important;
 }
 
-.ui-state-hover {
-	background: #85b2cb
-		-webkit-gradient(linear, left top, left bottom, from(rgba(162, 142, 124,
-		0.93)), to(rgb(244, 247, 252)))
-}
 /*-------------------------- Login CSS -------------------------------*/
 .password {
 	font-size: 9pt !important;
@@ -171,30 +166,6 @@
 }
 
 /* ----------------------Menu CSS--------------------------*/
-.ui-menu {
-	background: none !important;
-	padding: 0px;
-	border-width: 0px !important;
-}
-
-.ui-menuitem {
-	height: 35px;
-}
-
-.ui-menuitem-text {
-	color: white;
-}
-
-.ui-menu .ui-menu-child {
-	background: #6eb5a7;
-	color: white;
-}
-
-.ui-menu .ui-menu-parent .ui-menu-child{
-	width: 230px;
-	border-width: 0px;
-}
-
 .ui-corner-all {
 	/* border-radius: 0px !important; */
 	
@@ -211,7 +182,7 @@ input.file {
 
 .tblSingleLabel {
 	width: 25%;
-	background-color: #58B0B6;
+	background-color: #302873;
 	color: #fff;
 	padding: 6px 0px 6px 5px;
 	text-align: left;
@@ -403,10 +374,10 @@ table.dialogTable td {
 	padding: .571em .857em;
 	height: auto;
 	text-shadow: 0 1px 0 rgb(48, 40, 115);
-	background: #58B0B6
-		-webkit-gradient(linear, left top, left bottom, from(#58B0B6),
-		to(#58B0B6));
-	background: #58B0B6 -moz-linear-gradient(top, rgb(91, 36, 242),
+	background: #302873
+		-webkit-gradient(linear, left top, left bottom, from(#302873),
+		to(#302873));
+	background: #302873 -moz-linear-gradient(top, rgb(91, 36, 242),
 		rgb(91, 36, 242));
 	color: #fff;
 	font-weight: normal;
@@ -676,8 +647,8 @@ textarea, input[type='text'], input[type='password'], select {
 	padding: 20px;
 	background: #fff;
 	border-radius: 5px;
-	border-top: 5px solid #58B0B6;
-	border-bottom: 5px solid #58B0B6;
+	border-top: 5px solid #302873;
+	border-bottom: 5px solid #302873;
 	height: 350px;
 }
 
@@ -825,18 +796,6 @@ tr.search td.col {
     width: 346px;
 } */
 
-.ui-menuitem-link.ui-state-hover {
-    box-shadow:none !important;
-    border:none !important;
-    background: #58B0B6;
-}
-
-.ui-menuitem .ui-menuitem-active, .ui-menu-child .ui-state-hover {
-    box-shadow:none !important;
-    border:none !important;
-    background: #58B0B6;
-}
-
 .inputNumber > input {
 	width: 100% !important;
 }
@@ -868,10 +827,79 @@ tr.search td.col {
 }
 
 .ui-dialog .ui-dialog-title {
-	color: #58B0B6;
+	color: #302873;
 	text-align: center;
 }
 
 .info_message{
-	color: #58B0B6 !important;
+	color: #302873 !important;
+}
+
+.signOutButton button {
+	box-shadow: none !important;
+	text-shadow: none !important;
+    background: #f7ad59
+		-webkit-gradient(linear, left top, left bottom, from(rgb(247, 173, 89)),
+		to(rgb(247, 173, 89)));
+    color: #302873;
+    margin-top: 18px;
+    width: auto;
+    padding: 5px;
+	border: none;
+}
+
+.signOutButton button span {
+	font-size: 16px;
+}
+
+.signOutButton button:hover  {
+	background: #f7ad59
+		-webkit-gradient(linear, left top, left bottom, from(rgb(247, 173, 89)),
+		to(rgb(247, 173, 89)));
+	color: #302873;
+	background-image: none !important;
+	border: 1px solid #302873;
+}
+
+.signOutButton button:focus  {
+	background: #f7ad59
+		-webkit-gradient(linear, left top, left bottom, from(rgb(247, 173, 89)),
+		to(rgb(247, 173, 89)));
+	color: #302873;
+	background-image: none !important;
+	border: 1px solid #302873;
+}
+
+.ui-state-hover a:hover{
+	background: #fff !important;
+	width: 95%;
+	margin: 0px;
+	border: 1px solid #302873;
+}
+
+.fa {
+	color: #302873 !important;
+	margin-right: 5px;
+	margin-top: 8px;
+}
+
+.signOutMenu {
+	position: fixed; 
+	top: 11%; 
+	height: 27px; 
+	line-height: 27px !important; 
+	background: #fff; 
+	color: #302873 !important; 
+	width:12% !important; 
+	font-size: 16px !important;
+}
+
+.signOutMenu span {
+	color: #302873 !important;
+}
+
+.ui-menu, .ui-menu .ui-menu-child {
+	background: none;
+    box-shadow: none;
+    border: none;
 }

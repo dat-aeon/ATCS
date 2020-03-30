@@ -16,45 +16,13 @@ body {
 	width: 100%;
 	max-width: 100%;
 	min-width: 1000px;
-	height: 100px;
+	height: 12%;
 	position: fixed;
-	color: #fff;
+	color: #302873;
 	z-index: 1000;
-	background-color: #58B0B6;
+	background-color: #f7ad59;
 }
 
-#menu {
-	margin-top: 110px;
-	margin-top: 5%;
-	height: 33px;
-	width: 100%;
-	max-width: 100%;
-	min-width: 1000px;
-	font-weight: bold;
-	position: fixed;
-	background-color: #58B0B6;
-	padding: 2px 2em 2px 2em;
-	z-index: 1000;
-}
-
-#menu li a {
-	color: #58B0B6;
-	display: block;
-	font-weight: bold;
-	/* line-height: 30px; */
-	margin: 0px;
-	/* padding: 0px 25px; */
-	text-align: center;
-	text-decoration: none;
-	font-size: 14px;
-}
-
-/* #menu ul li:hover a {
-	background: #302873;
-	color: #FFFFFF;
-	text-decoration: none;
-}
- */
 #contents {
 	padding-bottom: 60px;
 	padding-left: 2%;
@@ -84,7 +52,7 @@ body {
 		position: fixed;
 		color: #fff;
 		z-index: 1000;
-		background-color: #58B0B6;
+		background-color: #302873;
 	}
 }
 
@@ -100,7 +68,7 @@ body {
 #title_lable {
 	margin-left: 5%;
 	line-height: 0.5pt;
-	color: #fff;
+	color: #302873;
 	/* font-size: 24pt; */
 	font-size: 20pt;
 }
@@ -112,7 +80,7 @@ body {
 }
 
 div.footer {
-	background: #58B0B6;
+	background: #302873;
 	color: #fff;
 	text-align: center;
 	bottom: 0;
